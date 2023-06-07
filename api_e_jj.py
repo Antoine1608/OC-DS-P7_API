@@ -84,7 +84,19 @@ def expl(input:Input):
     #Shap global
     idx = X.index.get_loc('mean')
     exp_glob = exp[idx]
+    # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
+    expl_glob = {
+        'values': exp_glob.values.tolist(),
+        'base_values': exp_glob.base_values.tolist(),
+        'data': exp_glob.data.tolist(),
+        # Ajoutez d'autres attributs pertinents ici
+    }
     
+    # Sérialiser le dictionnaire en JSON
+    json_xg = jsonable_encoder(expl_glob)
+    
+    # Retourner la réponse HTTP avec l'explication sérialisée en JSON
+    return json_xg 
 
     #Shap similaire
     # fonction pour récupérer l'âge d'un client
@@ -99,8 +111,19 @@ def expl(input:Input):
     idx = X.index.get_loc(index)
 
     exp_sim = exp[idx]
-
-    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}
+    # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
+    expl_sim = {
+        'values': exp_sim.values.tolist(),
+        'base_values': exp_gsim.base_values.tolist(),
+        'data': exp_sim.data.tolist(),
+        # Ajoutez d'autres attributs pertinents ici
+    }
+    
+    # Sérialiser le dictionnaire en JSON
+    json_xs = jsonable_encoder(expl_sim)
+    
+    # Retourner la réponse HTTP avec l'explication sérialisée en JSON
+    return json_xs
 
     return exp_cust'''
 
@@ -108,9 +131,10 @@ from fastapi.encoders import jsonable_encoder
 
 @app.post("/graphe")
 def expl(input: Input):
-    don = input.dict()
-    num = don['SK_ID_CURR']
-    
+    dat = input.dict()
+    num = dat['SK_ID_CURR']
+
+    #Shap customer
     # Obtenir l'index correspondant à SK_ID_CURR
     idx = df[df['SK_ID_CURR'] == num].index.item()
     
@@ -118,7 +142,7 @@ def expl(input: Input):
     exp_cust = exp[idx]
     
     # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
-    explanation_dict = {
+    expl_cust = {
         'values': exp_cust.values.tolist(),
         'base_values': exp_cust.base_values.tolist(),
         'data': exp_cust.data.tolist(),
@@ -126,10 +150,55 @@ def expl(input: Input):
     }
     
     # Sérialiser le dictionnaire en JSON
-    json_explanation = jsonable_encoder(explanation_dict)
+    json_xc = jsonable_encoder(expl_cust)
     
     # Retourner la réponse HTTP avec l'explication sérialisée en JSON
-    return json_explanation 
+    #return json_xc
+
+    #Shap global
+    idx = X.index.get_loc('mean')
+    exp_glob = exp[idx]
+    # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
+    expl_glob = {
+        'values': exp_glob.values.tolist(),
+        'base_values': exp_glob.base_values.tolist(),
+        'data': exp_glob.data.tolist(),
+        # Ajoutez d'autres attributs pertinents ici
+    }
+    
+    # Sérialiser le dictionnaire en JSON
+    json_xg = jsonable_encoder(expl_glob)
+    
+    # Retourner la réponse HTTP avec l'explication sérialisée en JSON
+    #return json_xg 
+
+    #Shap similaire
+    # fonction pour récupérer l'âge d'un client
+    def roundDown(n):
+        a=int(-n/3640)
+        return 10*a
+    sex = int(df.loc[df['SK_ID_CURR']== num, 'CODE_GENDER'])
+    age = int(df.loc[df['SK_ID_CURR']== num, 'DAYS_BIRTH'])
+
+    index = 's' + str(sex) + 'm' + str(roundDown(age))
+
+    idx = X.index.get_loc(index)
+
+    exp_sim = exp[idx]
+    # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
+    expl_sim = {
+        'values': exp_sim.values.tolist(),
+        'base_values': exp_gsim.base_values.tolist(),
+        'data': exp_sim.data.tolist(),
+        # Ajoutez d'autres attributs pertinents ici
+    }
+    
+    # Sérialiser le dictionnaire en JSON
+    json_xs = jsonable_encoder(expl_sim)
+    
+    # Retourner la réponse HTTP avec l'explication sérialisée en JSON
+    #return json_xs
+    return json_xc, json_xg, json_xs
 
 if __name__ == "__main__":
     import uvicorn
