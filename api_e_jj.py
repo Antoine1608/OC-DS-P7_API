@@ -70,9 +70,9 @@ def predict_credit(input:Input):
             "risque_defaut": round(prediction[0][1], 2)
         }
     
-    #return result
+'''    return result
 
-'''@app.post("/graphe")
+@app.post("/graphe")
 def explain(input:Input):'''
     don = input.dict()
     num = don['SK_ID_CURR']
