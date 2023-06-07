@@ -73,12 +73,11 @@ def predict_credit(input:Input):
     return result
 
 @app.post("/graphe")
-def expl(input:Input):
-
-    don = input.dict()
-    num = don['SK_ID_CURR']
+def expl():#input:Input):
+    #don = input.dict()
+    num = 2#don['SK_ID_CURR']
     #Shap client
-    idx = 2#df[df['SK_ID_CURR'] == num].index.item()
+    idx = df[df['SK_ID_CURR'] == num].index.item()
     exp_cust = exp[idx]
     
 
