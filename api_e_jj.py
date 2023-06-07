@@ -62,7 +62,7 @@ def predict_credit(input:Input):
     
     return result
 
-@app.get("/graphe")
+@app.post("/graphe")
 def explain(input:Input):
     dat = input.dict()
     num = dat['SK_ID_CURR']
