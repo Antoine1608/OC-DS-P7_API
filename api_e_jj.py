@@ -198,7 +198,7 @@ def expl(input: Input):
     
     # Retourner la réponse HTTP avec l'explication sérialisée en JSON
     #return json_xs
-    return json_xc, json_xg, json_xs
+    return json_xc#, json_xg, json_xs
 
 if __name__ == "__main__":
     import uvicorn
