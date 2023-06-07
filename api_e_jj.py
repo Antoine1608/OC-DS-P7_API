@@ -72,16 +72,16 @@ def predict_credit(input:Input):
 
     return result
 
-@app.post("/graphe")
-def expl():#input:Input):
-    #don = input.dict()
-    num = 2#don['SK_ID_CURR']
+'''@app.post("/graphe")
+def expl(input:Input):
+    don = input.dict()
+    num = don['SK_ID_CURR']
     #Shap client
-    idx = 2#df[df['SK_ID_CURR'] == num].index.item()
+    idx = df[df['SK_ID_CURR'] == num].index.item()
     exp_cust = exp[idx]
     
 
-    '''#Shap global
+    #Shap global
     idx = X.index.get_loc('mean')
     exp_glob = exp[idx]
     
@@ -100,10 +100,36 @@ def expl():#input:Input):
 
     exp_sim = exp[idx]
 
-    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}'''
+    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}
 
-    return 2#exp_cust
+    return exp_cust
+
+from fastapi.encoders import jsonable_encoder'''
+
+@app.post("/graphe")
+def expl(input: Input):
+    don = input.dict()
+    num = don['SK_ID_CURR']
     
+    # Obtenir l'index correspondant à SK_ID_CURR
+    idx = df[df['SK_ID_CURR'] == num].index.item()
+    
+    # Obtenir l'explication du client
+    exp_cust = exp[idx]
+    
+    # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
+    explanation_dict = {
+        'values': exp_cust.values.tolist(),
+        'base_values': exp_cust.base_values.tolist(),
+        'data': exp_cust.data.tolist(),
+        # Ajoutez d'autres attributs pertinents ici
+    }
+    
+    # Sérialiser le dictionnaire en JSON
+    json_explanation = jsonable_encoder(explanation_dict)
+    
+    # Retourner la réponse HTTP avec l'explication sérialisée en JSON
+    return json_explanation 
 
 if __name__ == "__main__":
     import uvicorn
