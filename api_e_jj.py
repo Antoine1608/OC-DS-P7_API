@@ -20,6 +20,12 @@ app = FastAPI()
 df = pd.read_csv("dfex.csv")
 X = pd.read_csv("X.csv")
 
+# Définir la première colonne en tant qu'index
+X = X.set_index(X.iloc[:, 0])
+
+# Supprimer la première colonne du DataFrame
+X = X.iloc[:, 1:]
+
 # Charger les variables threshold et important features
 # Opening JSON file
 f = open('data.json')
