@@ -81,7 +81,7 @@ def explain(input:Input):
     exp_cust = exp[idx]
     
 
-    #Shap global
+    '''#Shap global
     idx = X.index.get_loc('mean')
     exp_glob = exp[idx]
     
@@ -100,9 +100,9 @@ def explain(input:Input):
 
     exp_sim = exp[idx]
 
-    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}
+    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}'''
 
-    return expl
+    return exp_cust
     
 
 if __name__ == "__main__":
