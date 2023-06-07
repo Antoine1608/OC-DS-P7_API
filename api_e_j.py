@@ -46,7 +46,21 @@ def predict_credit(input:Input):
     dat = input.dict()
     data_in = df.loc[df['SK_ID_CURR']==dat['SK_ID_CURR'], L_var]
     prediction = best_model.predict_proba(data_in)
-    return{'prediction':prediction[0][1]}
+
+    if prediction[0][1] <= best_th:
+        result = {
+            "prediction": f"Crédit accordé (prédiction <= {best_th})",
+            "risque_defaut": round(prediction[0][1], 2)
+        }
+    else:
+        result = {
+            "prediction": f"Crédit refusé (prédiction > {best_th})",
+            "risque_defaut": round(prediction[0][1], 2)
+        }
+
+
+    
+    return result
 
 if __name__ == "__main__":
     import uvicorn
