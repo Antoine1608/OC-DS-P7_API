@@ -102,7 +102,7 @@ def expl():#input:Input):
 
     expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}'''
 
-    return exp_cust
+    return 2#exp_cust
     
 
 if __name__ == "__main__":
