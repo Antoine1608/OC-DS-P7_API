@@ -41,27 +41,12 @@ class Input(BaseModel):
 def read_root():
     return {"message": "Bienvenue dans l'API du projet 7 - Implémentez un modèle de scoring"}
 
-@app.get("/predict/{num}")
-def predict(num: int):
-    
-    data = df.loc[df['SK_ID_CURR']==num, L_var].values
-
-    y_te_pred = best_model.predict(data)
-    y_te_pred = (y_te_pred >= best_th)
-        
-    y_proba = best_model.predict_proba(data)
-    proba = y_proba[0][1]
-
-    if proba <= best_th:
-        result = {
-            "prediction": "Crédit accordé",
-            "risque_defaut": round(proba, 2)
-        }
-    else:
-        result = {
-            "prediction": "Crédit refusé",
-            "risque_defaut": round(proba, 2)
-        }
+@app.post("/predict")
+def predict_credit(input:Input):
+    dat = input.dict()
+    data_in = df.loc[df['SK_ID_CURR']==dat['SK_ID_CURR'], L_var]
+    prediction = best_model.predict_proba(data_in)
+    return{'prediction':prediction[0][1]}
     
     return result
 
