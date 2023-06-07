@@ -188,7 +188,7 @@ def expl(input: Input):
     # Convertir l'objet exp_cust en un dictionnaire JSON-compatible
     expl_sim = {
         'values': exp_sim.values.tolist(),
-        'base_values': exp_gsim.base_values.tolist(),
+        'base_values': exp_sim.base_values.tolist(),
         'data': exp_sim.data.tolist(),
         # Ajoutez d'autres attributs pertinents ici
     }
