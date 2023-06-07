@@ -58,12 +58,7 @@ def predict_credit(input:Input):
     dat = input.dict()
     data_in = df.loc[df['SK_ID_CURR']==dat['SK_ID_CURR'], L_var]
     prediction = best_model.predict_proba(data_in)
-    don = input.dict()
-    num = don['SK_ID_CURR']
-    #Shap client
-    idx = df[df['SK_ID_CURR'] == num].index.item()
-    exp_cust = exp[idx]
-
+    
     if prediction[0][1] <= best_th:
         result = {
             "prediction": f"Crédit accordé (prédiction <= {best_th})",
@@ -74,6 +69,17 @@ def predict_credit(input:Input):
             "prediction": f"Crédit refusé (prédiction > {best_th})",
             "risque_defaut": round(prediction[0][1], 2)
         }
+
+    return result
+
+@app.post("/graphe")
+def expl(input:Input):
+
+    don = input.dict()
+    num = don['SK_ID_CURR']
+    #Shap client
+    idx = 2#df[df['SK_ID_CURR'] == num].index.item()
+    exp_cust = exp[idx]
     
 
     '''#Shap global
@@ -97,7 +103,7 @@ def predict_credit(input:Input):
 
     expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}'''
 
-    return result, exp_cust
+    return exp_cust
     
 
 if __name__ == "__main__":
