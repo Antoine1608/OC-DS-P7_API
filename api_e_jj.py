@@ -36,6 +36,10 @@ L_var = data['feat']
 # Charger le meilleur modèle
 best_model = pickle.load(open('model.pkl', 'rb'))
 
+# Charger Explainer
+with open('exp.pickle', 'rb') as file:
+    exp = pickle.load(file)
+
 class Input(BaseModel):
     SK_ID_CURR:int
 
