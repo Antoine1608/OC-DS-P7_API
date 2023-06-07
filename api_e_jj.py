@@ -77,7 +77,7 @@ def expl():#input:Input):
     #don = input.dict()
     num = 2#don['SK_ID_CURR']
     #Shap client
-    idx = df[df['SK_ID_CURR'] == num].index.item()
+    idx = 2#df[df['SK_ID_CURR'] == num].index.item()
     exp_cust = exp[idx]
     
 
