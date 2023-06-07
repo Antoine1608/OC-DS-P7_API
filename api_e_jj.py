@@ -100,7 +100,9 @@ def explain(input:Input):
 
     exp_sim = exp[idx]
 
-    return exp_cust, exp_glob, exp_sim
+    expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}
+
+    return expl
     
 
 if __name__ == "__main__":
