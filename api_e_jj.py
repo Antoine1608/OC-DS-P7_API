@@ -102,9 +102,9 @@ def expl(input:Input):
 
     expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}
 
-    return exp_cust
+    return exp_cust'''
 
-from fastapi.encoders import jsonable_encoder'''
+from fastapi.encoders import jsonable_encoder
 
 @app.post("/graphe")
 def expl(input: Input):
