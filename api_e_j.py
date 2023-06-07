@@ -47,8 +47,6 @@ def predict_credit(input:Input):
     data_in = df.loc[df['SK_ID_CURR']==dat['SK_ID_CURR'], L_var]
     prediction = best_model.predict_proba(data_in)
     return{'prediction':prediction[0][1]}
-    
-    return result
 
 if __name__ == "__main__":
     import uvicorn
