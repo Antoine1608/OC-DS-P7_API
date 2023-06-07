@@ -70,10 +70,10 @@ def predict_credit(input:Input):
             "risque_defaut": round(prediction[0][1], 2)
         }
     
-    return result
+    #return result
 
-@app.post("/graphe")
-def explain(input:Input):
+'''@app.post("/graphe")
+def explain(input:Input):'''
     don = input.dict()
     num = don['SK_ID_CURR']
     #Shap client
@@ -102,7 +102,7 @@ def explain(input:Input):
 
     expl = {'xc':exp_cust, 'xg':exp_glob, 'xs':exp_sim}'''
 
-    return exp_cust
+    return result, exp_cust
     
 
 if __name__ == "__main__":
